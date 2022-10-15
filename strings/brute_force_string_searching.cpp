@@ -24,11 +24,19 @@ int brute_force(const std::string &text, const std::string &pattern) {
     int index = -1;
     if (pat_l <= txt_l) {
         for (size_t i = 0; i < txt_l - pat_l + 1; i++) {
-            std::string s = text.substr(i, pat_l);
-            if (s == pattern) {
+          for (size_t j = 0; j < pat_l; j++) {
+            if(pattern[j] == text[i+j]){
+              if(j == pat_l-1){
                 index = i;
                 break;
+              }
+            } else {
+              break;
             }
+          }
+          if(index != -1){
+            break;
+          }
         }
     }
     return index;
@@ -41,7 +49,7 @@ using string_search::brute_force;
 const std::vector<std::vector<std::string>> test_set = {
     // {text, pattern, expected output}
     {"a", "aa", "-1"},  {"a", "a", "0"},    {"ba", "b", "0"},
-    {"bba", "bb", "0"}, {"bbca", "c", "2"}, {"ab", "b", "1"}};
+    {"bba", "bb", "0"}, {"bba", "ab", "-1"}, {"bbca", "c", "2"}, {"ab", "b", "1"}};
 
 /** Main function */
 int main() {
